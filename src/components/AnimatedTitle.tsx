@@ -10,8 +10,8 @@ export default function AnimatedTitle({ text }: Props) {
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.025,
-        delayChildren: 0.1,
+        staggerChildren: 0.015,
+        delayChildren: 0.05,
       },
     },
   };
@@ -28,8 +28,8 @@ export default function AnimatedTitle({ text }: Props) {
       filter: "blur(0px)",
       transition: {
         type: "spring",
-        damping: 20,
-        stiffness: 80,
+        damping: 25,
+        stiffness: 150,
       },
     },
   };
