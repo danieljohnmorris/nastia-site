@@ -36,7 +36,7 @@ export default function AnimatedTitle({ text }: Props) {
 
   return (
     <motion.h1
-      className="font-semibold text-dark leading-[1.1] tracking-tight text-5xl sm:text-6xl lg:text-7xl mb-6 lg:mb-8"
+      className="font-semibold text-dark leading-[1.1] tracking-tight text-[2.5rem] sm:text-6xl lg:text-7xl mb-6 lg:mb-8"
       variants={container}
       initial="hidden"
       animate="visible"
