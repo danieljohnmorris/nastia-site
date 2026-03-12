@@ -9,6 +9,10 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
 
 <Layout title="nastia.digital">
   <div class="page">
+    <nav class="top-nav">
+      <a href="/writing" class="nav-link">Writing</a>
+    </nav>
+
     <div class="icon-float">
       <FlowerIcon client:load />
     </div>
@@ -44,6 +48,22 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
     max-width: 1200px;
     margin: 0 auto;
     padding: 3rem 3rem 4rem;
+  }
+
+  .top-nav {
+    margin-bottom: 1rem;
+  }
+
+  .nav-link {
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: #666;
+    text-decoration: none;
+    transition: color 0.15s ease;
+  }
+
+  .nav-link:hover {
+    color: #081117;
   }
 
   .icon-float {
