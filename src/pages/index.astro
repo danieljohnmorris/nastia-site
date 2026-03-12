@@ -34,15 +34,14 @@ function formatDate(date: Date): string {
 
     <AnimatedTitle client:load text="Anastasia Niedinger" />
 
-    <!-- Mobile: sidebar nav + flower row -->
-    <div class="flex items-center justify-between sm:hidden mb-6">
+    <!-- Mobile: sidebar nav -->
+    <div class="flex items-center sm:hidden mb-6">
       <nav class="flex gap-4">
         <a href="/writing" class="text-sm font-medium text-dark hover:text-accent transition-colors">Writing</a>
         <a href="/career" class="text-sm font-medium text-dark hover:text-accent transition-colors">Career</a>
         <a href="/about" class="text-sm font-medium text-dark hover:text-accent transition-colors">About</a>
         <a href="/contact" class="text-sm font-medium text-dark hover:text-accent transition-colors">Contact</a>
       </nav>
-      <FlowerIcon client:load />
     </div>
 
     <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">

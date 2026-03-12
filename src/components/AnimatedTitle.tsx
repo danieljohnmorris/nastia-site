@@ -41,14 +41,24 @@ export default function AnimatedTitle({ text }: Props) {
       initial="hidden"
       animate="visible"
     >
-      {text.split("").map((char, i) => (
-        <motion.span
-          key={i}
-          variants={letterVariant}
-          style={{ display: char === " " ? "inline" : "inline-block" }}
-        >
-          {char === " " ? "\u00A0" : char}
-        </motion.span>
+      {text.split(" ").map((word, wi) => (
+        <span key={wi} style={{ display: "inline-block", whiteSpace: "nowrap" }}>
+          {word.split("").map((char, ci) => {
+            const globalIndex = text.indexOf(word) + ci;
+            return (
+              <motion.span
+                key={globalIndex}
+                variants={letterVariant}
+                style={{ display: "inline-block" }}
+              >
+                {char}
+              </motion.span>
+            );
+          })}
+          {wi < text.split(" ").length - 1 && (
+            <motion.span variants={letterVariant} style={{ display: "inline" }}>{"\u00A0"}</motion.span>
+          )}
+        </span>
       ))}
     </motion.h1>
   );
