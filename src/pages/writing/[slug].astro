@@ -23,7 +23,6 @@ if (!article) {
 }
 
 const { Content, headings } = await render(article);
-
 const { title, description, publishDate, updatedDate, tags } = article.data;
 
 function formatDate(date: Date): string {
@@ -41,15 +40,14 @@ function getReadingTime(text: string): string {
 }
 
 const readingTime = getReadingTime(article.body || '');
-
 const tocHeadings = headings.filter(h => h.depth === 2 || h.depth === 3);
 const showToc = tocHeadings.length >= 3;
 ---
 
 <Layout title={`${title} - nastia.digital`}>
-  <main class="article">
-    <nav class="nav">
-      <a href="/writing" class="back-link">
+  <main class="max-w-[700px] mx-auto px-5 sm:px-8 py-8 lg:py-12">
+    <nav class="mb-8">
+      <a href="/writing" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 no-underline hover:text-dark transition-colors">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
@@ -58,47 +56,47 @@ const showToc = tocHeadings.length >= 3;
       </a>
     </nav>
 
-    <header class="article-header">
-      <h1>{title}</h1>
-      <div class="article-meta">
+    <header class="mb-8 pb-6 border-b border-gray-200">
+      <h1 class="text-3xl sm:text-4xl font-bold tracking-tight leading-tight mb-3">{title}</h1>
+      <div class="flex items-center gap-2 text-sm text-gray-400 mb-3">
         <time datetime={publishDate.toISOString()}>{formatDate(publishDate)}</time>
-        <span class="sep">&middot;</span>
+        <span class="opacity-50">&middot;</span>
         <span>{readingTime}</span>
         {updatedDate && (
           <>
-            <span class="sep">&middot;</span>
+            <span class="opacity-50">&middot;</span>
             <time datetime={updatedDate.toISOString()}>Updated {formatDate(updatedDate)}</time>
           </>
         )}
       </div>
       {tags && tags.length > 0 && (
-        <div class="article-tags">
+        <div class="flex flex-wrap gap-1.5">
           {tags.map((tag) => (
-            <a class="tag" href={`/writing?tag=${tag}`}>{tag}</a>
+            <a class="text-xs px-2.5 py-1 bg-gray-50 border border-gray-200 rounded text-gray-500 no-underline hover:border-dark hover:text-dark transition-colors" href={`/writing?tag=${tag}`}>{tag}</a>
           ))}
         </div>
       )}
     </header>
 
     {showToc && (
-      <details class="toc">
-        <summary>Table of contents ({tocHeadings.length} sections)</summary>
-        <ul>
+      <details class="mb-8 p-4 bg-gray-50 border border-gray-200 rounded-lg">
+        <summary class="text-xs font-semibold text-gray-500 cursor-pointer select-none">Table of contents ({tocHeadings.length} sections)</summary>
+        <ul class="list-none p-0 mt-3">
           {tocHeadings.map((h) => (
-            <li class={h.depth === 3 ? 'toc-sub' : ''}>
-              <a href={`#${h.slug}`}>{h.text}</a>
+            <li class={h.depth === 3 ? 'pl-4' : ''}>
+              <a class="block py-0.5 text-sm text-gray-500 no-underline hover:text-accent" href={`#${h.slug}`}>{h.text}</a>
             </li>
           ))}
         </ul>
       </details>
     )}
 
-    <article class="article-content">
+    <article class="prose prose-lg max-w-none">
       <Content />
     </article>
 
-    <div class="article-footer">
-      <a href="/writing" class="back-link">
+    <div class="mt-12 pt-6 border-t border-gray-200">
+      <a href="/writing" class="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 no-underline hover:text-dark transition-colors">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <line x1="19" y1="12" x2="5" y2="12"></line>
           <polyline points="12 19 5 12 12 5"></polyline>
@@ -110,233 +108,42 @@ const showToc = tocHeadings.length >= 3;
 </Layout>
 
 <style>
-  .article {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
+  @reference "../../styles/global.css";
+
+  article :global(h2) {
+    @apply text-2xl font-bold tracking-tight mt-10 mb-3 text-dark;
   }
-
-  .nav {
-    margin-bottom: 2.5rem;
+  article :global(h3) {
+    @apply text-xl font-semibold mt-8 mb-2 text-dark;
   }
-
-  .back-link {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #666;
-    text-decoration: none;
-    transition: color 0.15s ease;
+  article :global(p) {
+    @apply text-base sm:text-lg leading-7 sm:leading-8 text-gray-600 mb-5;
   }
-
-  .back-link:hover {
-    color: #081117;
+  article :global(strong) {
+    @apply text-dark font-semibold;
   }
-
-  .article-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #eee;
+  article :global(a) {
+    @apply text-accent underline;
   }
-
-  .article-header h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    line-height: 1.2;
-    margin-bottom: 0.75rem;
+  article :global(blockquote) {
+    @apply my-6 px-5 py-3 border-l-3 border-dark bg-gray-50 italic text-gray-500;
   }
-
-  .article-meta {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 0.85rem;
-    color: #999;
-    margin-bottom: 0.75rem;
+  article :global(code) {
+    @apply text-[0.9em] bg-gray-100 px-1.5 py-0.5 rounded border border-gray-200;
   }
-
-  .sep {
-    opacity: 0.5;
+  article :global(pre) {
+    @apply my-6 p-5 bg-gray-900 rounded-lg overflow-x-auto;
   }
-
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem;
+  article :global(pre code) {
+    @apply bg-transparent border-none p-0 text-sm leading-relaxed text-gray-200;
   }
-
-  .tag {
-    font-size: 0.75rem;
-    padding: 0.2rem 0.6rem;
-    background: #f5f5f5;
-    border: 1px solid #e8e8e8;
-    border-radius: 4px;
-    color: #666;
-    text-decoration: none;
-    transition: border-color 0.15s ease, color 0.15s ease;
+  article :global(ul), article :global(ol) {
+    @apply mb-5 pl-6 text-gray-600;
   }
-
-  .tag:hover {
-    border-color: #081117;
-    color: #081117;
+  article :global(li) {
+    @apply mb-1.5 leading-7;
   }
-
-  /* Table of Contents */
-  .toc {
-    margin-bottom: 2rem;
-    padding: 1rem 1.25rem;
-    background: #fafafa;
-    border: 1px solid #eee;
-    border-radius: 8px;
-  }
-
-  .toc summary {
-    font-size: 0.8rem;
-    font-weight: 600;
-    color: #666;
-    cursor: pointer;
-    user-select: none;
-  }
-
-  .toc ul {
-    list-style: none;
-    padding: 0;
-    margin: 0.75rem 0 0;
-  }
-
-  .toc li {
-    padding: 0.2rem 0;
-  }
-
-  .toc li.toc-sub {
-    padding-left: 1rem;
-  }
-
-  .toc a {
-    font-size: 0.85rem;
-    color: #555;
-    text-decoration: none;
-  }
-
-  .toc a:hover {
-    color: #09f;
-  }
-
-  /* Article Content */
-  .article-content {
-    font-size: 1.0625rem;
-    line-height: 1.75;
-    color: #333;
-  }
-
-  .article-content :global(h2) {
-    font-size: 1.5rem;
-    margin-top: 2.5rem;
-    margin-bottom: 0.75rem;
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    line-height: 1.3;
-    color: #081117;
-  }
-
-  .article-content :global(h3) {
-    font-size: 1.25rem;
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    line-height: 1.4;
-    color: #081117;
-  }
-
-  .article-content :global(p) {
-    margin-bottom: 1.25rem;
-  }
-
-  .article-content :global(ul),
-  .article-content :global(ol) {
-    margin-bottom: 1.25rem;
-    padding-left: 1.5rem;
-  }
-
-  .article-content :global(li) {
-    margin-bottom: 0.4rem;
-    line-height: 1.7;
-  }
-
-  .article-content :global(blockquote) {
-    margin: 1.5rem 0;
-    padding: 0.75rem 1.25rem;
-    border-left: 3px solid #081117;
-    background: #fafafa;
-    font-style: italic;
-    color: #555;
-  }
-
-  .article-content :global(code) {
-    font-size: 0.9em;
-    background: #f5f5f5;
-    padding: 0.15em 0.35em;
-    border-radius: 3px;
-    border: 1px solid #e8e8e8;
-  }
-
-  .article-content :global(pre) {
-    margin: 1.5rem 0;
-    padding: 1.25rem;
-    background: #1a1a1a;
-    border-radius: 8px;
-    overflow-x: auto;
-  }
-
-  .article-content :global(pre code) {
-    background: none;
-    border: none;
-    padding: 0;
-    font-size: 0.875rem;
-    line-height: 1.6;
-    color: #e0e0e0;
-  }
-
-  .article-content :global(a) {
-    color: #09f;
-    text-decoration: underline;
-  }
-
-  .article-content :global(a:hover) {
-    color: #007acc;
-  }
-
-  .article-content :global(strong) {
-    color: #081117;
-    font-weight: 600;
-  }
-
-  .article-content :global(hr) {
-    margin: 2.5rem 0;
-    border: none;
-    border-top: 1px solid #eee;
-  }
-
-  .article-footer {
-    margin-top: 3rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid #eee;
-  }
-
-  @media (max-width: 640px) {
-    .article {
-      padding: 1.5rem 1rem 3rem;
-    }
-
-    .article-header h1 {
-      font-size: 1.75rem;
-    }
-
-    .article-content {
-      font-size: 1rem;
-    }
+  article :global(hr) {
+    @apply my-10 border-t border-gray-200;
   }
 </style>

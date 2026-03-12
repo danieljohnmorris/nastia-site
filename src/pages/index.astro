@@ -8,21 +8,27 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
 ---
 
 <Layout title="nastia.digital">
-  <div class="page">
-    <nav class="top-nav">
-      <a href="/writing" class="nav-link">Writing</a>
-    </nav>
-
-    <div class="icon-float">
+  <div class="relative max-w-[1200px] mx-auto px-5 sm:px-8 lg:px-12 py-8 lg:py-12">
+    <div class="absolute top-8 right-5 sm:right-8 lg:top-12 lg:right-12 hidden sm:block">
       <FlowerIcon client:load />
     </div>
 
     <AnimatedTitle client:load text="Anastasia Niedinger" />
 
-    <main class="main">
-      <div class="content">
+    <!-- Mobile: sidebar nav + flower row -->
+    <div class="flex items-center justify-between sm:hidden mb-6">
+      <nav class="flex gap-4">
+        <a href="/writing" class="text-sm font-medium text-dark hover:text-accent transition-colors">Writing</a>
+        <a href="#" class="text-sm font-medium text-dark hover:text-accent transition-colors">About</a>
+        <a href="#" class="text-sm font-medium text-dark hover:text-accent transition-colors">Contact</a>
+      </nav>
+      <FlowerIcon client:load />
+    </div>
+
+    <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+      <div class="flex-1 min-w-0">
         <FadeIn client:load delay={0.5}>
-          <p class="intro">
+          <p class="text-sm sm:text-base leading-7 text-dark mb-6 lg:mb-8">
             Hi, I'm Nastia, an independent Strategist of 7+ years.<br />
             I work in-house with clients to build potent brands and robust companies.<br />
             I uncover truths about behaviour which make products or business ideas distinct,<br />
@@ -32,199 +38,18 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
           </p>
         </FadeIn>
 
-        <section class="work">
-          <WorkList client:load />
-        </section>
+        <WorkList client:load />
       </div>
 
-      <Sidebar client:load />
-    </main>
+      <!-- Desktop sidebar -->
+      <div class="hidden lg:block">
+        <Sidebar client:load />
+      </div>
+
+      <!-- Mobile: pills + social below work -->
+      <div class="lg:hidden">
+        <Sidebar client:load />
+      </div>
+    </div>
   </div>
 </Layout>
-
-<style>
-  .page {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 3rem 3rem 4rem;
-  }
-
-  .top-nav {
-    margin-bottom: 1rem;
-  }
-
-  .nav-link {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #666;
-    text-decoration: none;
-    transition: color 0.15s ease;
-  }
-
-  .nav-link:hover {
-    color: #081117;
-  }
-
-  .icon-float {
-    position: absolute;
-    top: 3rem;
-    right: 3rem;
-  }
-
-  .main {
-    display: flex;
-    gap: 3rem;
-  }
-
-  .content {
-    flex: 1;
-    min-width: 0;
-  }
-
-  .intro {
-    font-size: 0.9rem;
-    line-height: 1.7;
-    color: #081117;
-    margin-bottom: 2rem;
-  }
-
-  @media (max-width: 768px) {
-    .main {
-      flex-direction: column;
-      gap: 2.5rem;
-    }
-
-    .page {
-      padding: 1.5rem 1rem 3rem;
-    }
-
-    .top-row {
-      flex-direction: column;
-      gap: 1rem;
-    }
-  }
-</style>
-
-<style is:global>
-  /* Hero name */
-  .hero-name {
-    font-family: "Inter", sans-serif;
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
-    font-weight: 600;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    color: #081117;
-    margin-bottom: 2rem;
-  }
-
-  /* Flower icon */
-  .flower-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* Work list styles */
-  .work-list {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .work-row {
-    font-size: 0.85rem;
-    line-height: 1.9;
-    color: #081117;
-  }
-
-  .work-type {
-    font-weight: 700;
-  }
-
-  .work-sep {
-    color: #999;
-  }
-
-  .work-focus {
-    font-weight: 400;
-  }
-
-  .work-detail {
-    color: #555;
-  }
-
-  .work-client {
-    font-weight: 700;
-  }
-
-  .work-current {
-    color: #666;
-    font-weight: 400;
-  }
-
-  .work-year {
-    color: #666;
-    font-weight: 400;
-  }
-
-  .work-note {
-    color: #081117;
-    font-weight: 400;
-  }
-
-  /* Sidebar styles */
-  .sidebar {
-    width: 260px;
-    flex-shrink: 0;
-  }
-
-  .pill-wrap {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-  }
-
-  .pill {
-    display: inline-block;
-    padding: 0.35rem 0.8rem;
-    font-size: 0.75rem;
-    font-weight: 500;
-    border: 1px solid #222;
-    border-radius: 20px;
-    color: #081117;
-    white-space: nowrap;
-    cursor: default;
-    transition: all 0.15s ease;
-  }
-
-  .pill:hover {
-    background: #081117;
-    color: #fff;
-  }
-
-  /* Social links grid */
-  .social-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 0.35rem 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .social-link {
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: #081117;
-    text-decoration: none;
-    padding: 0.2rem 0;
-  }
-
-  .social-link:hover {
-    color: #09f;
-  }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      width: 100%;
-    }
-  }
-</style>

@@ -68,21 +68,21 @@ const item = {
 export default function WorkList() {
   return (
     <motion.div
-      className="work-list"
+      className="flex flex-col"
       variants={container}
       initial="hidden"
       animate="visible"
     >
       {work.map((w, i) => (
-        <motion.div key={i} variants={item} className="work-row">
-          <span className="work-type">{w.type}</span>
-          <span className="work-sep"> &bull; </span>
-          <span className="work-focus">{w.focus}, </span>
-          <span className="work-client">{w.client}</span>
-          {w.detail && <span className="work-detail">, {w.detail}</span>}
-          {w.current && <span className="work-current"> (current)</span>}
-          {w.year && <span className="work-year"> ({w.year})</span>}
-          {w.note && <span className="work-note"> {w.note} 💰</span>}
+        <motion.div key={i} variants={item} className="text-sm leading-7 text-dark">
+          <span className="font-bold">{w.type}</span>
+          <span className="text-gray-400"> &bull; </span>
+          <span>{w.focus}, </span>
+          <span className="font-bold">{w.client}</span>
+          {w.detail && <span className="text-gray-500">, {w.detail}</span>}
+          {w.current && <span className="text-gray-500"> (current)</span>}
+          {w.year && <span className="text-gray-500"> ({w.year})</span>}
+          {w.note && <span> {w.note} 💰</span>}
         </motion.div>
       ))}
     </motion.div>

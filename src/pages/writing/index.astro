@@ -37,64 +37,62 @@ function formatDate(date: Date): string {
 ---
 
 <Layout title="Writing - nastia.digital">
-  <div class="page">
-    <nav class="nav">
-      <a href="/" class="nav-logo">nastia.digital</a>
+  <div class="max-w-3xl mx-auto px-5 sm:px-8 py-8 lg:py-12">
+    <nav class="mb-8">
+      <a href="/" class="text-sm font-medium text-gray-500 hover:text-dark transition-colors">nastia.digital</a>
     </nav>
 
-    <header class="page-header">
-      <h1 class="page-title">Writing</h1>
-      <p class="page-intro">Thoughts on strategy, brands, consumer behaviour, and the spaces between technology and culture.</p>
+    <header class="mb-8 pb-6 border-b border-gray-200">
+      <h1 class="text-4xl sm:text-5xl font-bold tracking-tight mb-2">Writing</h1>
+      <p class="text-sm sm:text-base text-gray-500 leading-relaxed">Thoughts on strategy, brands, consumer behaviour, and the spaces between technology and culture.</p>
 
-      <div class="search-bar">
-        <div class="search-wrapper">
-          <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 sm:gap-4 mt-5">
+        <div class="relative flex-1">
+          <svg class="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="11" cy="11" r="8"></circle>
             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
           </svg>
           <input
             type="text"
             id="search-input"
-            class="search-input"
+            class="w-full py-2.5 pl-10 pr-10 text-sm font-sans text-dark bg-gray-50 border border-gray-200 rounded-md outline-none transition-colors focus:border-dark"
             placeholder="Filter by title, description, or tag..."
             autocomplete="off"
           />
-          <button id="search-clear" class="search-clear" type="button" aria-label="Clear search" hidden>
+          <button id="search-clear" class="absolute right-2.5 top-1/2 -translate-y-1/2 bg-transparent border-none text-gray-400 cursor-pointer p-1 flex items-center justify-center rounded hover:text-dark transition-colors" type="button" aria-label="Clear search" hidden>
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <line x1="18" y1="6" x2="6" y2="18"></line>
               <line x1="6" y1="6" x2="18" y2="18"></line>
             </svg>
           </button>
         </div>
-        <p class="page-stats" id="page-stats">{totalArticles} articles</p>
+        <p class="text-xs text-gray-400 shrink-0" id="page-stats">{totalArticles} articles</p>
       </div>
 
-      <div class="tag-cloud">
+      <div class="flex flex-wrap gap-1.5 mt-4">
         {popularTags.map(tag => (
-          <button class="tag-pill" data-tag={tag} type="button">{tag}</button>
+          <button class="tag-pill text-xs font-sans font-medium px-3 py-1 rounded-full border border-gray-200 bg-white text-gray-500 cursor-pointer transition-all hover:border-dark hover:text-dark whitespace-nowrap" data-tag={tag} type="button">{tag}</button>
         ))}
       </div>
     </header>
 
     {sortedArticles.length > 0 ? (
-      <div class="article-list" id="article-list">
+      <div id="article-list">
         {sortedArticles.map((article) => (
           <a
-            class="article-card"
+            class="article-card block py-4 border-b border-gray-100 no-underline text-inherit group"
             href={`/writing/${article.id}`}
             data-search={`${article.data.title} ${article.data.description} ${(article.data.tags || []).join(' ')}`.toLowerCase()}
           >
-            <div class="article-meta">
-              <time datetime={article.data.publishDate.toISOString()}>
-                {formatDate(article.data.publishDate)}
-              </time>
-            </div>
-            <h2 class="article-title">{article.data.title}</h2>
-            <p class="article-desc">{article.data.description}</p>
+            <time class="text-xs text-gray-400" datetime={article.data.publishDate.toISOString()}>
+              {formatDate(article.data.publishDate)}
+            </time>
+            <h2 class="text-lg font-semibold tracking-tight mt-1 mb-1 transition-colors group-hover:text-accent leading-snug">{article.data.title}</h2>
+            <p class="text-sm text-gray-500 leading-relaxed mb-2">{article.data.description}</p>
             {article.data.tags && article.data.tags.length > 0 && (
-              <div class="article-tags">
+              <div class="flex flex-wrap gap-1">
                 {article.data.tags.map((tag) => (
-                  <span class="tag">{tag}</span>
+                  <span class="text-[0.7rem] px-2 py-0.5 bg-gray-100 rounded text-gray-500">{tag}</span>
                 ))}
               </div>
             )}
@@ -102,245 +100,12 @@ function formatDate(date: Date): string {
         ))}
       </div>
     ) : (
-      <p class="empty-state">No articles published yet.</p>
+      <p class="text-center text-gray-400 text-sm py-12">No articles published yet.</p>
     )}
 
-    <p class="empty-state" id="no-results" hidden>No articles matching your search.</p>
+    <p class="text-center text-gray-400 text-sm py-12" id="no-results" hidden>No articles matching your search.</p>
   </div>
 </Layout>
-
-<style>
-  .page {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 2rem 2rem 4rem;
-  }
-
-  .nav {
-    margin-bottom: 3rem;
-  }
-
-  .nav-logo {
-    font-weight: 700;
-    font-size: 0.9rem;
-    color: #081117;
-    text-decoration: none;
-    letter-spacing: -0.02em;
-  }
-
-  .nav-logo:hover {
-    color: #09f;
-  }
-
-  .page-header {
-    margin-bottom: 2.5rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #eee;
-  }
-
-  .page-title {
-    font-size: 2.5rem;
-    font-weight: 700;
-    letter-spacing: -0.03em;
-    margin-bottom: 0.5rem;
-  }
-
-  .page-intro {
-    font-size: 0.95rem;
-    color: #666;
-    line-height: 1.6;
-  }
-
-  .search-bar {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 1.25rem;
-  }
-
-  .search-wrapper {
-    position: relative;
-    flex: 1;
-    min-width: 0;
-  }
-
-  .search-icon {
-    position: absolute;
-    left: 0.875rem;
-    top: 50%;
-    transform: translateY(-50%);
-    color: #999;
-    pointer-events: none;
-  }
-
-  .search-input {
-    width: 100%;
-    padding: 0.625rem 2.5rem 0.625rem 2.5rem;
-    font-size: 0.9rem;
-    font-family: "Inter", sans-serif;
-    color: #081117;
-    background: #f8f8f8;
-    border: 1px solid #e0e0e0;
-    border-radius: 6px;
-    outline: none;
-    transition: border-color 0.2s ease;
-    box-sizing: border-box;
-  }
-
-  .search-input::placeholder {
-    color: #999;
-  }
-
-  .search-input:focus {
-    border-color: #081117;
-  }
-
-  .search-clear {
-    position: absolute;
-    right: 0.625rem;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
-    border: none;
-    color: #999;
-    cursor: pointer;
-    padding: 0.25rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border-radius: 4px;
-    transition: color 0.2s ease;
-  }
-
-  .search-clear:hover {
-    color: #081117;
-  }
-
-  .page-stats {
-    font-size: 0.8rem;
-    color: #999;
-    white-space: nowrap;
-    margin: 0;
-    flex-shrink: 0;
-  }
-
-  .tag-cloud {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-    margin-top: 1rem;
-  }
-
-  .tag-pill {
-    font-size: 0.75rem;
-    font-family: "Inter", sans-serif;
-    font-weight: 500;
-    padding: 0.3rem 0.7rem;
-    border-radius: 20px;
-    border: 1px solid #ddd;
-    background: #fff;
-    color: #666;
-    cursor: pointer;
-    transition: all 0.15s ease;
-    white-space: nowrap;
-  }
-
-  .tag-pill:hover,
-  .tag-pill.active {
-    border-color: #081117;
-    color: #081117;
-  }
-
-  .article-list {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-  }
-
-  .article-card {
-    display: block;
-    padding: 1.25rem 0;
-    border-bottom: 1px solid #f0f0f0;
-    text-decoration: none;
-    color: inherit;
-    transition: background 0.15s ease;
-  }
-
-  .article-card:first-child {
-    padding-top: 0;
-  }
-
-  .article-card:hover {
-    color: inherit;
-  }
-
-  .article-card:hover .article-title {
-    color: #09f;
-  }
-
-  .article-card.hidden {
-    display: none !important;
-  }
-
-  .article-meta {
-    font-size: 0.75rem;
-    color: #999;
-    margin-bottom: 0.35rem;
-  }
-
-  .article-title {
-    font-size: 1.125rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    margin-bottom: 0.3rem;
-    transition: color 0.15s ease;
-    line-height: 1.3;
-  }
-
-  .article-desc {
-    font-size: 0.85rem;
-    color: #666;
-    line-height: 1.5;
-    margin-bottom: 0.5rem;
-  }
-
-  .article-tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.3rem;
-  }
-
-  .tag {
-    font-size: 0.7rem;
-    padding: 0.15rem 0.5rem;
-    background: #f5f5f5;
-    border-radius: 4px;
-    color: #888;
-  }
-
-  .empty-state {
-    text-align: center;
-    color: #999;
-    font-size: 0.9rem;
-    padding: 3rem 0;
-  }
-
-  @media (max-width: 640px) {
-    .page {
-      padding: 1.5rem 1rem 3rem;
-    }
-
-    .page-title {
-      font-size: 2rem;
-    }
-
-    .search-bar {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 0.5rem;
-    }
-  }
-</style>
 
 <script>
   function initWritingSearch() {
@@ -361,23 +126,18 @@ function formatDate(date: Date): string {
 
       const total = filteredItems.length;
       const query = input.value.trim();
-      if (query) {
-        statsEl.textContent = `${total} article${total !== 1 ? 's' : ''} matching "${query}"`;
-      } else {
-        statsEl.textContent = `${total} articles`;
-      }
-
+      statsEl.textContent = query
+        ? `${total} article${total !== 1 ? 's' : ''} matching "${query}"`
+        : `${total} articles`;
       noResults.hidden = total > 0;
     }
 
     function filterAndRender() {
       const query = input.value.trim().toLowerCase();
       clearBtn.hidden = !query;
-
       filteredItems = query
         ? items.filter((el) => el.dataset.search!.includes(query))
         : [...items];
-
       render();
     }
 
@@ -426,3 +186,10 @@ function formatDate(date: Date): string {
   document.addEventListener('astro:page-load', initWritingSearch);
   initWritingSearch();
 </script>
+
+<style>
+  .tag-pill.active {
+    border-color: #081117;
+    color: #081117;
+  }
+</style>

@@ -39,33 +39,47 @@ const item = {
 export default function Sidebar() {
   return (
     <motion.aside
-      className="sidebar"
+      className="w-full lg:w-[260px] lg:shrink-0"
       variants={container}
       initial="hidden"
       animate="visible"
     >
-      <div className="pill-wrap">
+      <motion.nav className="flex flex-row lg:flex-col gap-3 lg:gap-0.5 pb-4 lg:pb-5 mb-4 lg:mb-5 border-b border-gray-200" variants={item}>
+        <a href="/writing" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Writing</a>
+        <a href="#" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">About</a>
+        <a href="#" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Contact</a>
+      </motion.nav>
+
+      <div className="flex flex-wrap gap-1.5">
         {expertise.map((label) => (
-          <motion.span key={label} className="pill" variants={item}>
+          <motion.span
+            key={label}
+            className="inline-block px-3 py-1.5 text-xs font-medium border border-gray-800 rounded-full text-dark whitespace-nowrap cursor-default transition-all hover:bg-dark hover:text-white"
+            variants={item}
+          >
             {label}
           </motion.span>
         ))}
       </div>
 
-      <div className="pill-wrap" style={{ marginTop: "0.75rem" }}>
+      <div className="flex flex-wrap gap-1.5 mt-3">
         {industries.map((label) => (
-          <motion.span key={label} className="pill" variants={item}>
+          <motion.span
+            key={label}
+            className="inline-block px-3 py-1.5 text-xs font-medium border border-gray-800 rounded-full text-dark whitespace-nowrap cursor-default transition-all hover:bg-dark hover:text-white"
+            variants={item}
+          >
             {label}
           </motion.span>
         ))}
       </div>
 
-      <div className="social-grid">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-1 mt-8">
         {socialLinks.map((link) => (
           <motion.a
             key={link.label}
             href={link.href}
-            className="social-link"
+            className="text-sm font-medium text-dark no-underline py-0.5 hover:text-accent transition-colors"
             variants={item}
             whileHover={{ opacity: 0.6 }}
           >
