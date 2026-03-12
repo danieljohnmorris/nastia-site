@@ -2,9 +2,28 @@
 import Layout from "../layouts/Layout.astro";
 import AnimatedTitle from "../components/AnimatedTitle.tsx";
 import FadeIn from "../components/FadeIn.tsx";
-import WorkList from "../components/WorkList.tsx";
 import Sidebar from "../components/Sidebar.tsx";
 import FlowerIcon from "../components/FlowerIcon.tsx";
+import { getCollection } from "astro:content";
+
+const isDev = import.meta.env.DEV;
+const now = new Date();
+const allArticles = await getCollection("writing", ({ data }) => {
+  if (data.draft) return false;
+  if (!isDev && data.publishDate > now) return false;
+  return true;
+});
+const recentArticles = allArticles
+  .sort((a, b) => b.data.publishDate.getTime() - a.data.publishDate.getTime())
+  .slice(0, 5);
+
+function formatDate(date: Date): string {
+  return new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(date);
+}
 ---
 
 <Layout title="nastia.digital">
@@ -19,8 +38,9 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
     <div class="flex items-center justify-between sm:hidden mb-6">
       <nav class="flex gap-4">
         <a href="/writing" class="text-sm font-medium text-dark hover:text-accent transition-colors">Writing</a>
-        <a href="#" class="text-sm font-medium text-dark hover:text-accent transition-colors">About</a>
-        <a href="#" class="text-sm font-medium text-dark hover:text-accent transition-colors">Contact</a>
+        <a href="/career" class="text-sm font-medium text-dark hover:text-accent transition-colors">Career</a>
+        <a href="/about" class="text-sm font-medium text-dark hover:text-accent transition-colors">About</a>
+        <a href="/contact" class="text-sm font-medium text-dark hover:text-accent transition-colors">Contact</a>
       </nav>
       <FlowerIcon client:load />
     </div>
@@ -38,7 +58,26 @@ import FlowerIcon from "../components/FlowerIcon.tsx";
           </p>
         </FadeIn>
 
-        <WorkList client:load />
+        <FadeIn client:load delay={0.7}>
+          <div class="mb-2">
+            <h2 class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Recent writing</h2>
+            {recentArticles.map((article) => (
+              <a
+                class="block py-3 border-b border-gray-100 no-underline text-inherit group"
+                href={`/writing/${article.id}`}
+              >
+                <time class="text-xs text-gray-400" datetime={article.data.publishDate.toISOString()}>
+                  {formatDate(article.data.publishDate)}
+                </time>
+                <h3 class="text-base font-semibold tracking-tight mt-0.5 mb-0.5 transition-colors group-hover:text-accent leading-snug">{article.data.title}</h3>
+                <p class="text-sm text-gray-500 leading-relaxed">{article.data.description}</p>
+              </a>
+            ))}
+            <a href="/writing" class="inline-block mt-4 text-sm font-medium text-gray-500 hover:text-dark transition-colors">
+              All writing &rarr;
+            </a>
+          </div>
+        </FadeIn>
       </div>
 
       <!-- Desktop sidebar -->

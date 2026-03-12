@@ -46,8 +46,9 @@ export default function Sidebar() {
     >
       <motion.nav className="flex flex-row lg:flex-col gap-3 lg:gap-0.5 pb-4 lg:pb-5 mb-4 lg:mb-5 border-b border-gray-200" variants={item}>
         <a href="/writing" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Writing</a>
-        <a href="#" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">About</a>
-        <a href="#" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Contact</a>
+        <a href="/career" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Career</a>
+        <a href="/about" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">About</a>
+        <a href="/contact" className="text-sm font-medium text-dark hover:text-accent transition-colors py-1">Contact</a>
       </motion.nav>
 
       <div className="flex flex-wrap gap-1.5">
@@ -74,7 +75,7 @@ export default function Sidebar() {
         ))}
       </div>
 
-      <div className="grid grid-cols-2 gap-x-6 gap-y-1 mt-8">
+      <div className="grid grid-cols-2 gap-x-6 gap-y-1 mt-6 pt-6 border-t border-gray-200">
         {socialLinks.map((link) => (
           <motion.a
             key={link.label}
